@@ -63,6 +63,7 @@ bool CBST<T1, T2>::Insert(const tPair<T1, T2>& _pair)
 	{
 		tBSTNode<T1, T2>* pNode = m_pRoot;
 		NODE_TYPE node_type = NODE_TYPE::END;
+
 		while (true)
 		{
 			//방향을 정하는것: Enum과 Array를 사용하여
@@ -82,7 +83,7 @@ bool CBST<T1, T2>::Insert(const tPair<T1, T2>& _pair)
 			if (nullptr == pNode->arrNode[(int)node_type])
 			{
 				pNode->arrNode[(int)node_type] = pNewNode;
-				pNewNode->pParent = pNode;
+				pNewNode->arrNode[(int)NODE_TYPE::PARENT] = pNode;
 				break;
 			}
 			else

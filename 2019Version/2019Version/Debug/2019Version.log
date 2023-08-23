@@ -1,27 +1,2 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(499,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-  TreeMain.cpp
-C:\Users\joejw\OneDrive\Desktop\2019Version\2019Version\CBST.h(85,15): error C2039: 'pParent': is not a member of 'tBSTNode<T1,T2>'
-          with
-          [
-              T1=int,
-              T2=int
-          ]
-C:\Users\joejw\OneDrive\Desktop\2019Version\2019Version\CBST.h(41): message : see declaration of 'tBSTNode<T1,T2>'
-          with
-          [
-              T1=int,
-              T2=int
-          ]
-C:\Users\joejw\OneDrive\Desktop\2019Version\2019Version\CBST.h(54): message : while compiling class template member function 'bool CBST<int,int>::Insert(const tPair<T1,T2> &)'
-          with
-          [
-              T1=int,
-              T2=int
-          ]
-C:\Users\joejw\OneDrive\Desktop\2019Version\2019Version\TreeMain.cpp(27): message : see reference to function template instantiation 'bool CBST<int,int>::Insert(const tPair<T1,T2> &)' being compiled
-          with
-          [
-              T1=int,
-              T2=int
-          ]
-C:\Users\joejw\OneDrive\Desktop\2019Version\2019Version\TreeMain.cpp(24): message : see reference to class template instantiation 'CBST<int,int>' being compiled
+  2019Version.vcxproj -> C:\Users\joejw\OneDrive\Desktop\Cpp_Study\2019Version\2019Version\2019Version.exe

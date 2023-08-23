@@ -32,8 +32,5 @@ int main()
 	pair.first = 50;
 	bstint.Insert(pair);
 
-
-
-
 	return 0;
 }
