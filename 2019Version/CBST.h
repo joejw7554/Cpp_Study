@@ -91,6 +91,7 @@ bool CBST<T1, T2>::Insert(const tPair<T1, T2>& _pair)
 			}
 		}
 	}
+	//Increase Count after the process is done
 	++m_iCount;
 	return true;
 }
