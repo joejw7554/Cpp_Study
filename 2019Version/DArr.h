@@ -19,3 +19,4 @@ void AscendingOrderSort(MyStruct* Mystruct, void (*SortFunc)(int*, int));
 void DescendingOrderSort(MyStruct* Mystruct);
 
 void Sort(MyStruct* Mystruct, void(*SortFunc)(int*, int));
+
