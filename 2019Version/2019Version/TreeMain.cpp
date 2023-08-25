@@ -5,32 +5,19 @@
 #include "CBST.h"
 
 using namespace std;
-enum myEnum
-{
-	Type1,
-	Type2,
-	Type3,
-};
-
-enum class OTHER_TYPE
-{
-	Type1,
-	Type2,
-	Type3
-};
 
 int main()
-{ 
+{
 	CBST<int, int> bstint;
-	tPair<int, int> pair;
-	pair.first = 100;
-	bstint.Insert(pair);
+	bstint.insert(make_bstpair(100, 0));
+	bstint.insert(make_bstpair(150, 0));
+	bstint.insert(make_bstpair(50, 0));
 
-	pair.first = 150;
-	bstint.Insert(pair);
+	CBST<int, int>::iterator bIter = bstint.begin();
 
-	pair.first = 50;
-	bstint.Insert(pair);
+	bIter = bstint.find(150);
+
+	int a = 30;
 
 	return 0;
 }
