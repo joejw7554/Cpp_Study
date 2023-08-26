@@ -13,11 +13,30 @@ int main()
 	bstint.insert(make_bstpair(150, 0));
 	bstint.insert(make_bstpair(50, 0));
 
-	CBST<int, int>::iterator bIter = bstint.begin();
+	CBST<int, int>::iterator Iter = bstint.begin();
+	Iter = bstint.find(150);
 
-	bIter = bstint.find(150);
 
-	int a = 30;
+	(*Iter).first;
+
+	Iter->second;
+	
+
+	
+
+	/*
+
+
+	Iter->first;
+
+	(*Iter).second;
+	Iter->second;
+
+
+	for (Iter = bstint.begin(); Iter != bstint.end(); ++Iter)
+	{
+		cout << Iter->first << "	" << Iter->second << endl;
+	}*/
 
 	return 0;
 }
