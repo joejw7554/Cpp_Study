@@ -12,18 +12,17 @@ int main()
 	bstint.insert(make_bstpair(100, 0));
 	bstint.insert(make_bstpair(150, 0));
 	bstint.insert(make_bstpair(50, 0));
+	bstint.insert(make_bstpair(25, 0));
+	//bstint.insert(make_bstpair(75, 0));
+	bstint.insert(make_bstpair(125, 0));
+	bstint.insert(make_bstpair(175, 0));
+
 
 	CBST<int, int>::iterator Iter = bstint.begin();
-	Iter = bstint.find(150);
-
-	(*Iter).second;
-	Iter->second;
+	Iter = bstint.find(50);
+	Iter = bstint.erase(Iter);
 
 
-	for (Iter = bstint.begin(); Iter != bstint.end(); ++Iter)
-	{
-		cout << Iter->first << "	" << Iter->second << endl;
-	}
 
 	return 0;
 }

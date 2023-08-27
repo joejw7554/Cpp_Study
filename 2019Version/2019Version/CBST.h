@@ -39,16 +39,13 @@ struct tBSTNode
 	{
 		if (nullptr == arrNode[(int)NODE_TYPE::PARENT])
 			return true;
-
 		return false;
 	}
-
 
 	bool IsLeftChild()
 	{
 		if (arrNode[(int)NODE_TYPE::PARENT]->arrNode[(int)NODE_TYPE::LCHILD] == this)
 			return true;
-
 		return false;
 	}
 
@@ -56,7 +53,20 @@ struct tBSTNode
 	{
 		if (arrNode[(int)NODE_TYPE::PARENT]->arrNode[(int)NODE_TYPE::RCHILD] == this)
 			return true;
+		return false;
+	}
 
+	bool IsLeaf()
+	{
+		if (nullptr == arrNode[(int)NODE_TYPE::LCHILD] && nullptr == arrNode[(int)NODE_TYPE::RCHILD])
+			return true;
+		return false;
+	}
+
+	bool IsFull()
+	{
+		if (arrNode[(int)NODE_TYPE::LCHILD] && arrNode[(int)NODE_TYPE::RCHILD])
+			return true;
 		return false;
 	}
 
@@ -85,6 +95,10 @@ public:
 	iterator begin();
 	iterator end();
 	iterator find(const T1& _find);
+	iterator erase(const iterator& _iter);
+
+private:
+	tBSTNode<T1, T2>* DeleteNode(tBSTNode<T1, T2>* _pTargetNode);
 
 public:
 	CBST() :m_pRoot(nullptr), m_iCount(0)
@@ -137,6 +151,7 @@ public:
 		~iterator()
 		{}
 
+		friend class CBST<T1, T2>;
 	};
 };
 
@@ -319,3 +334,83 @@ template<typename T1, typename T2>
 	 return iterator(this, pNode); //depending on the loop result it will return different result:  valid key address, failed->return nullptr in iter
 
 }
+
+ template<typename T1, typename T2>
+ typename CBST<T1,T2>::iterator CBST<T1, T2>::erase(const iterator& _iter)
+ {
+	 assert(this == _iter.m_pBST);
+
+	 tBSTNode<T1, T2>* pSuccessor = DeleteNode(_iter.m_pNode);
+
+	 return iterator(this, pSuccessor);
+ }
+
+ template<typename T1, typename T2>
+ inline tBSTNode<T1, T2>* CBST<T1, T2>::DeleteNode(tBSTNode<T1, T2>* _pTargetNode)
+ {
+	 tBSTNode<T1, T2>* pSuccessor = nullptr;
+
+	 //루트 노드인경우
+
+	 //자식이 하나도 없는경우
+	 if (_pTargetNode->IsLeaf())
+	 {
+		 //삭제시킬 노드의 후속자 노드를 찾아둔다.
+		 pSuccessor = GetInOrderSuccessor(_pTargetNode);
+
+		 //삭제할 노드가 루트였다(자식없고 루트==> BST안에 데이터가 1개밖에 없는경우)
+		 if (_pTargetNode == m_pRoot)
+		 {
+			 m_pRoot = nullptr;
+		 }
+		 else
+		 {
+			 // 부모노드로 접근, 삭제될 노드인 자식을 가리키는 포인터를 nullptr 로 만든다.
+			 if (_pTargetNode->IsLeftChild())
+				 _pTargetNode->arrNode[(int)NODE_TYPE::PARENT]->arrNode[(int)NODE_TYPE::LCHILD] =nullptr;
+			 else
+				 _pTargetNode->arrNode[(int)NODE_TYPE::PARENT]->arrNode[(int)NODE_TYPE::RCHILD] = nullptr;
+		 }
+
+		 delete _pTargetNode;
+	 }
+	 //자식 2개인경우
+	 else if (_pTargetNode->IsFull())
+	 {
+
+	 }
+	 //자식 1개인경우
+	 else
+	 {
+		 pSuccessor = GetInOrderSuccessor(_pTargetNode);
+
+		 NODE_TYPE eChildType = NODE_TYPE::LCHILD;
+		 if (_pTargetNode->arrNode[(int)NODE_TYPE::RCHILD])
+			 eChildType = NODE_TYPE::RCHILD;
+
+		 //삭제할 노드가 루트였다
+		 if (_pTargetNode == m_pRoot)
+		 {
+			 //자식노드(1개)를 루트로 만든다.
+			 m_pRoot= _pTargetNode->arrNode[(int)eChildType];
+			 _pTargetNode->arrNode[(int)eChildType]->arrNode[(int)NODE_TYPE::PARENT] = nullptr;
+		 }
+		 else
+		 {
+			 //삭제될 노드의 부모와, 삭제될 노드의 자식을 연결해준다.
+			 if (_pTargetNode->IsLeftChild())
+			 {
+				 _pTargetNode->arrNode[(int)NODE_TYPE::PARENT]->arrNode[(int)NODE_TYPE::LCHILD] = _pTargetNode->arrNode[(int)eChildType];
+			 }
+			 else
+			 {
+				 _pTargetNode->arrNode[(int)NODE_TYPE::PARENT]->arrNode[(int)NODE_TYPE::RCHILD] = _pTargetNode->arrNode[(int)eChildType];
+			 }
+			 _pTargetNode->arrNode[(int)eChildType]->arrNode[(int)NODE_TYPE::PARENT] = _pTargetNode->arrNode[(int)NODE_TYPE::PARENT];
+		 }
+		 delete _pTargetNode;
+	 }
+
+	 --m_iCount;
+	 return pSuccessor;
+ }
