@@ -16,19 +16,6 @@ int main()
 	CBST<int, int>::iterator Iter = bstint.begin();
 	Iter = bstint.find(150);
 
-
-	(*Iter).first;
-
-	Iter->second;
-	
-
-	
-
-	/*
-
-
-	Iter->first;
-
 	(*Iter).second;
 	Iter->second;
 
@@ -36,7 +23,7 @@ int main()
 	for (Iter = bstint.begin(); Iter != bstint.end(); ++Iter)
 	{
 		cout << Iter->first << "	" << Iter->second << endl;
-	}*/
+	}
 
 	return 0;
 }

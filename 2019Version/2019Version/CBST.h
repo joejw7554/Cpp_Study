@@ -191,12 +191,12 @@ template<typename T1, typename T2>
  tBSTNode<T1, T2>* CBST<T1, T2>::GetInOrderSuccessor(tBSTNode<T1, T2>* _pNode)
 {
 	 tBSTNode<T1, T2>* pSuccessor = nullptr;
-	 //1. 오른쪽 자식이 있는경우 //오른쪽 자식으로 가서, 왼쪽이 없을때까지 내려감
+	 //1. 오른쪽 자식이 있는경우
 	 if (nullptr!= _pNode->arrNode[(int)NODE_TYPE::RCHILD])
 	 {
 		 pSuccessor = _pNode->arrNode[(int)NODE_TYPE::RCHILD];
 
-		 while (pSuccessor->arrNode[(int)NODE_TYPE::LCHILD])
+		 while (pSuccessor->arrNode[(int)NODE_TYPE::LCHILD]) //왼쪽 자식이 없을때까지 내려감
 		 {
 			 pSuccessor = pSuccessor->arrNode[(int)NODE_TYPE::LCHILD];
 		 }
@@ -233,7 +233,39 @@ template<typename T1, typename T2>
 template<typename T1, typename T2>
  tBSTNode<T1, T2>* CBST<T1, T2>::GetInOrderPredecessor(tBSTNode<T1, T2>* _pNode)
 {
-	 return NULL;
+	 //
+	 tBSTNode<T1, T2>* pPredecessor = nullptr;
+	 if (nullptr != _pNode->arrNode[(int)NODE_TYPE::LCHILD])
+	 {
+		 pPredecessor = _pNode->arrNode[(int)NODE_TYPE::LCHILD];
+
+		 /*while (pPredecessor->arrNode[(int)NODE_TYPE::LCHILD])
+		 {
+			 pPredecessor = pPredecessor->arrNode[(int)NODE_TYPE::LCHILD];
+		 }*/
+	 }
+	 else
+	 {
+		 pPredecessor = _pNode;
+
+		 while (true)
+		 {
+			 if (pPredecessor->IsRoot())
+			 {
+				 return nullptr;
+			 }
+			 if (pPredecessor->IsRightChild())
+			 {
+				 pPredecessor = pPredecessor->arrNode[(int)NODE_TYPE::PARENT];
+				 break;
+			 }
+			 else
+			 {
+				 pPredecessor = pPredecessor->arrNode[(int)NODE_TYPE::PARENT];
+			 }
+		 }
+	 }
+	 return pPredecessor;
 }
 
 template<typename T1, typename T2>
