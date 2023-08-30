@@ -348,7 +348,7 @@ template<typename T1, typename T2>
  template<typename T1, typename T2>
  inline tBSTNode<T1, T2>* CBST<T1, T2>::DeleteNode(tBSTNode<T1, T2>* _pTargetNode)
  {
-	 tBSTNode<T1, T2>* pSuccessor = nullptr;
+	 tBSTNode<T1, T2>* pSuccessor = GetInOrderSuccessor(_pTargetNode);
 
 	 //루트 노드인경우
 
@@ -356,7 +356,6 @@ template<typename T1, typename T2>
 	 if (_pTargetNode->IsLeaf())
 	 {
 		 //삭제시킬 노드의 후속자 노드를 찾아둔다.
-		 pSuccessor = GetInOrderSuccessor(_pTargetNode);
 
 		 //삭제할 노드가 루트였다(자식없고 루트==> BST안에 데이터가 1개밖에 없는경우)
 		 if (_pTargetNode == m_pRoot)
@@ -373,16 +372,25 @@ template<typename T1, typename T2>
 		 }
 
 		 delete _pTargetNode;
+
+		 --m_iCount;
 	 }
 	 //자식 2개인경우
 	 else if (_pTargetNode->IsFull())
 	 {
 
+		 //삭제 될 자리에 중위 후속자의 값을 복사시킨다
+		 _pTargetNode->pair = pSuccessor->pair;
+
+		 //중위 후속자 노드를 산다한다.
+		 DeleteNode(pSuccessor);
+
+		 // 삭제할 노드가 곧 중위 후속자가 되었다
+		 pSuccessor = _pTargetNode;
 	 }
 	 //자식 1개인경우
 	 else
 	 {
-		 pSuccessor = GetInOrderSuccessor(_pTargetNode);
 
 		 NODE_TYPE eChildType = NODE_TYPE::LCHILD;
 		 if (_pTargetNode->arrNode[(int)NODE_TYPE::RCHILD])
@@ -409,8 +417,9 @@ template<typename T1, typename T2>
 			 _pTargetNode->arrNode[(int)eChildType]->arrNode[(int)NODE_TYPE::PARENT] = _pTargetNode->arrNode[(int)NODE_TYPE::PARENT];
 		 }
 		 delete _pTargetNode;
+
+		 --m_iCount;
 	 }
 
-	 --m_iCount;
 	 return pSuccessor;
  }
